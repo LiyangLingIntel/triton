@@ -38,14 +38,14 @@ public:
                        ArrayRef<int32_t> order,
                        Attribute &resultEncoding) const = 0;
 
-  virtual LogicalResult
-  inferReduceOpEncoding(Attribute operandEncoding, unsigned axis,
-                        Attribute &resultEncoding) const = 0;
+  virtual LogicalResult inferReduceOpEncoding(Attribute operandEncoding,
+                                              unsigned axis,
+                                              Attribute &resultEncoding) const;
 
   virtual LogicalResult
   inferExpandDimsOpEncoding(Attribute operandEncoding, unsigned axis,
                             Attribute &resultEncoding,
-                            std::optional<Location> location) const = 0;
+                            std::optional<Location> location) const;
 
   // Note: This function only verifies the operand encoding.  It doesn't infer
   // the result encoding.
@@ -62,23 +62,23 @@ public:
   virtual LogicalResult
   inferReshapeOpEncoding(ArrayRef<int64_t> srcShape, Attribute srcEnc,
                          ArrayRef<int64_t> dstShape, Attribute &dstEnc,
-                         std::optional<Location> loc) const = 0;
+                         std::optional<Location> loc) const;
 
   // Check if two layouts are structurally the same, even if their names are
   // different
   virtual LogicalResult
   verifyLayoutsAreEqual(ArrayRef<int64_t> shape, Attribute expected,
-                        Attribute got, std::optional<Location> loc) const = 0;
+                        Attribute got, std::optional<Location> loc) const;
 
   virtual LogicalResult
   inferDefaultJoinOpEncoding(Attribute srcEnc, Attribute &dstEnc,
                              ArrayRef<int64_t> shape,
-                             std::optional<Location> loc) const = 0;
+                             std::optional<Location> loc) const;
 
-  virtual LogicalResult
-  inferSplitOpEncoding(Attribute srcEnc, Attribute &dstEnc,
-                       ArrayRef<int64_t> shape,
-                       std::optional<Location> loc) const = 0;
+  virtual LogicalResult inferSplitOpEncoding(Attribute srcEnc,
+                                             Attribute &dstEnc,
+                                             ArrayRef<int64_t> shape,
+                                             std::optional<Location> loc) const;
 
   // Verify that the encoding are compatible to be used together in a dot
   // operation
@@ -89,7 +89,7 @@ public:
   virtual LogicalResult
   inferFp4ToFpOpEncoding(ArrayRef<int64_t> shape, int axis, Attribute inEnc,
                          Attribute &outEnc, bool fwdInference,
-                         std::optional<Location> loc) const = 0;
+                         std::optional<Location> loc) const;
 };
 
 class DialectVerifyTensorLayoutInterface
